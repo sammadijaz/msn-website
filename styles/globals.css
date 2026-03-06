@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-gray-950 text-gray-100 antialiased;
+  }
+
+  ::selection {
+    @apply bg-msn-500/30;
+  }
+}
+
+@layer components {
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-msn-400 via-purple-400 to-pink-400;
+  }
+
+  .glass-card {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl;
+  }
+
+  .glow {
+    box-shadow: 0 0 60px -12px rgba(99, 102, 241, 0.25);
+  }
+
+  .code-block {
+    @apply bg-gray-900/80 border border-gray-800 rounded-xl p-6 font-mono text-sm overflow-x-auto;
+  }
+}
