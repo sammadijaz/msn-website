@@ -1,6 +1,6 @@
 {
   "name": "msn-website",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "private": true,
   "description": "Official website for Mad Sam Notation (MSN)",
   "scripts": {
