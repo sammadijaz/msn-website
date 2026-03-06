@@ -27,8 +27,7 @@ const areas = [
   },
   {
     title: "Documentation",
-    description:
-      "Write tutorials, improve API docs, add more examples, translate docs.",
+    description: "Write tutorials, improve API docs, add more examples, translate docs.",
     difficulty: "Beginner",
     tags: ["Markdown", "Technical Writing"],
   },
@@ -41,8 +40,7 @@ const areas = [
   },
   {
     title: "Language Ports",
-    description:
-      "Port the parser to other languages: Python, Rust, Go, Java, C#.",
+    description: "Port the parser to other languages: Python, Rust, Go, Java, C#.",
     difficulty: "Advanced",
     tags: ["Multi-language"],
   },
@@ -93,9 +91,8 @@ export default function ContributePage() {
           Contribute
         </motion.h1>
         <p className="mb-12 max-w-3xl text-gray-400 text-lg">
-          MSN is fully open source under the MIT license. We welcome
-          contributions of all kinds — code, documentation, bug reports, and
-          ideas.
+          MSN is fully open source under the MIT license. We welcome contributions of all kinds —
+          code, documentation, bug reports, and ideas.
         </p>
 
         {/* How to contribute */}
@@ -161,10 +158,7 @@ export default function ContributePage() {
                     {area.difficulty}
                   </span>
                   {area.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="px-2 py-1 text-xs text-gray-400 bg-white/5 rounded"
-                    >
+                    <span key={tag} className="px-2 py-1 text-xs text-gray-400 bg-white/5 rounded">
                       {tag}
                     </span>
                   ))}
@@ -185,21 +179,16 @@ export default function ContributePage() {
             <ul className="space-y-3 list-disc list-inside">
               <li>
                 Write clear commit messages following{" "}
-                <strong className="text-white">
-                  Conventional&nbsp;Commits
-                </strong>
-                .
+                <strong className="text-white">Conventional&nbsp;Commits</strong>.
               </li>
               <li>
-                Add tests for new features. We use{" "}
-                <strong className="text-white">Vitest</strong>.
+                Add tests for new features. We use <strong className="text-white">Vitest</strong>.
               </li>
               <li>Keep PRs focused — one feature or fix per PR.</li>
               <li>Update documentation when changing public APIs.</li>
               <li>Be kind and respectful in all interactions.</li>
               <li>
-                All contributions are under the{" "}
-                <strong className="text-white">MIT license</strong>.
+                All contributions are under the <strong className="text-white">MIT license</strong>.
               </li>
             </ul>
           </div>

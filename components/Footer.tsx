@@ -9,26 +9,17 @@ export function Footer() {
             <h3 className="mb-4 text-sm font-semibold text-white">Project</h3>
             <ul className="space-y-2">
               <li>
-                <Link
-                  href="/docs"
-                  className="text-sm text-gray-500 hover:text-gray-300"
-                >
+                <Link href="/docs" className="text-sm text-gray-500 hover:text-gray-300">
                   Documentation
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/examples"
-                  className="text-sm text-gray-500 hover:text-gray-300"
-                >
+                <Link href="/examples" className="text-sm text-gray-500 hover:text-gray-300">
                   Examples
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/playground"
-                  className="text-sm text-gray-500 hover:text-gray-300"
-                >
+                <Link href="/playground" className="text-sm text-gray-500 hover:text-gray-300">
                   Playground
                 </Link>
               </li>
@@ -62,18 +53,12 @@ export function Footer() {
                 </a>
               </li>
               <li>
-                <Link
-                  href="/contribute"
-                  className="text-sm text-gray-500 hover:text-gray-300"
-                >
+                <Link href="/contribute" className="text-sm text-gray-500 hover:text-gray-300">
                   Contributing
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/comparison"
-                  className="text-sm text-gray-500 hover:text-gray-300"
-                >
+                <Link href="/comparison" className="text-sm text-gray-500 hover:text-gray-300">
                   Comparisons
                 </Link>
               </li>
@@ -90,8 +75,7 @@ export function Footer() {
         </div>
         <div className="mt-12 pt-8 text-center border-t border-white/5">
           <p className="text-sm text-gray-600">
-            &copy; {new Date().getFullYear()} Mad Sam Notation. Open source
-            under MIT License.
+            &copy; {new Date().getFullYear()} Mad Sam Notation. Open source under MIT License.
           </p>
         </div>
       </div>
