@@ -122,7 +122,14 @@ function tokenize(source: string): Token[] {
       const val = c.slice(colonIdx + 2).trim();
 
       if (val === "|" || val === ">") {
-        tokens.push({ type: TT.MULTILINE_MARKER, depth, key, multilineMode: val as "|" | ">", raw, line: lineNum });
+        tokens.push({
+          type: TT.MULTILINE_MARKER,
+          depth,
+          key,
+          multilineMode: val as "|" | ">",
+          raw,
+          line: lineNum,
+        });
         continue;
       }
 
@@ -291,10 +298,17 @@ function buildObject(children: ASTNode[]): { [k: string]: JsonValue } {
   for (const child of children) {
     if (!child.key) continue;
     switch (child.type) {
-      case "value":  obj[child.key] = child.value as JsonValue; break;
-      case "object": obj[child.key] = astToJson(child); break;
-      case "array":  obj[child.key] = buildArray(child.children); break;
-      default:       obj[child.key] = astToJson(child);
+      case "value":
+        obj[child.key] = child.value as JsonValue;
+        break;
+      case "object":
+        obj[child.key] = astToJson(child);
+        break;
+      case "array":
+        obj[child.key] = buildArray(child.children);
+        break;
+      default:
+        obj[child.key] = astToJson(child);
     }
   }
   return obj;
@@ -305,7 +319,9 @@ function buildArray(children: ASTNode[]): JsonValue[] {
   for (const child of children) {
     switch (child.type) {
       case "array-item":
-        arr.push(child.children.length > 0 ? buildObject(child.children) : child.value as JsonValue);
+        arr.push(
+          child.children.length > 0 ? buildObject(child.children) : (child.value as JsonValue),
+        );
         break;
       case "object":
         if (!child.key) arr.push(buildObject(child.children));
@@ -329,7 +345,7 @@ function astToJson(node: ASTNode): JsonValue {
     case "object": {
       if (node.children.length === 0) return {};
       const hasArrayItems = node.children.some(
-        (c) => c.type === "array-item" || (c.type === "object" && !c.key)
+        (c) => c.type === "array-item" || (c.type === "object" && !c.key),
       );
       return hasArrayItems ? buildArray(node.children) : buildObject(node.children);
     }
@@ -341,9 +357,7 @@ function astToJson(node: ASTNode): JsonValue {
       return node.value as JsonValue;
 
     case "array-item":
-      return node.children.length > 0
-        ? buildObject(node.children)
-        : (node.value as JsonValue);
+      return node.children.length > 0 ? buildObject(node.children) : (node.value as JsonValue);
 
     default:
       return null;
@@ -405,17 +419,23 @@ export default function PlaygroundPage() {
     }
   }, [source]);
 
-  const inputStats = useMemo(() => ({
-    chars: source.length,
-    tokens: countTokens(source),
-    lines: source ? source.split(/\r?\n/).length : 0,
-  }), [source]);
+  const inputStats = useMemo(
+    () => ({
+      chars: source.length,
+      tokens: countTokens(source),
+      lines: source ? source.split(/\r?\n/).length : 0,
+    }),
+    [source],
+  );
 
-  const outputStats = useMemo(() => ({
-    chars: output.length,
-    tokens: countTokens(output),
-    lines: output ? output.split(/\r?\n/).length : 0,
-  }), [output]);
+  const outputStats = useMemo(
+    () => ({
+      chars: output.length,
+      tokens: countTokens(output),
+      lines: output ? output.split(/\r?\n/).length : 0,
+    }),
+    [output],
+  );
 
   function handleCopy() {
     if (!output) return;
@@ -432,11 +452,7 @@ export default function PlaygroundPage() {
   return (
     <main className="pt-24 pb-16 min-h-screen">
       <div className="mx-auto px-4 max-w-7xl sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-8"
-        >
+        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
           <h1 className="mb-2 text-4xl font-bold">
             <span className="gradient-text">Playground</span>
           </h1>
@@ -449,7 +465,7 @@ export default function PlaygroundPage() {
         {/* Savings badge */}
         {savings !== null && savings > 0 && (
           <div className="mb-4">
-            <span className="px-3 py-1 text-xs font-semibold text-green-400 bg-green-500/10 rounded-full border border-green-500/20">
+            <span className="px-3 py-1 text-xs font-semibold text-green-400 bg-green-500/10 rounded-full border-green-500/20 border">
               MSN is {savings}% smaller than the JSON output
             </span>
           </div>
@@ -458,7 +474,7 @@ export default function PlaygroundPage() {
         {/* Editor panels */}
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
           {/* ── Input: MSN ── */}
-          <div className="flex flex-col rounded-2xl border border-white/10 overflow-hidden">
+          <div className="overflow-hidden flex flex-col rounded-2xl border-white/10 border">
             <div className="flex items-center gap-2 px-4 py-3 bg-gray-900 border-b border-white/5">
               <div className="flex gap-1.5">
                 <div className="w-3 h-3 bg-red-500/80 rounded-full" />
@@ -466,7 +482,7 @@ export default function PlaygroundPage() {
                 <div className="w-3 h-3 bg-green-500/80 rounded-full" />
               </div>
               <span className="ml-2 text-xs text-gray-500 font-mono">input.msn</span>
-              <span className="ml-auto px-2 py-0.5 text-xs rounded bg-msn-500/20 text-msn-400">
+              <span className="ml-auto px-2 py-0.5 text-xs text-msn-400 bg-msn-500/20 rounded">
                 MSN
               </span>
             </div>
@@ -474,14 +490,14 @@ export default function PlaygroundPage() {
             <textarea
               value={source}
               onChange={(e) => setSource(e.target.value)}
-              className="flex-1 p-5 text-sm font-mono text-gray-300 leading-relaxed bg-gray-900/50 resize-none focus:outline-none min-h-[420px]"
+              className="flex-1 p-5 min-h-[420px] text-sm font-mono text-gray-300 leading-relaxed bg-gray-900/50 resize-none focus:outline-none"
               spellCheck={false}
               placeholder="Type your MSN here..."
               aria-label="MSN source input"
             />
 
             {/* Input stats bar */}
-            <div className="flex items-center gap-4 px-4 py-2.5 bg-gray-900/80 border-t border-white/5 text-[11px] font-mono text-gray-500 select-none">
+            <div className="flex items-center gap-4 px-4 py-2.5 text-[11px] font-mono text-gray-500 bg-gray-900/80 border-t border-white/5 select-none">
               <span>{inputStats.chars.toLocaleString()} chars</span>
               <span className="w-px h-3 bg-white/10" />
               <span>{inputStats.lines} lines</span>
@@ -491,7 +507,7 @@ export default function PlaygroundPage() {
           </div>
 
           {/* ── Output: JSON ── */}
-          <div className="flex flex-col rounded-2xl border border-white/10 overflow-hidden">
+          <div className="overflow-hidden flex flex-col rounded-2xl border-white/10 border">
             <div className="flex items-center gap-2 px-4 py-3 bg-gray-900 border-b border-white/5">
               <div className="flex gap-1.5">
                 <div className="w-3 h-3 bg-red-500/80 rounded-full" />
@@ -499,34 +515,38 @@ export default function PlaygroundPage() {
                 <div className="w-3 h-3 bg-green-500/80 rounded-full" />
               </div>
               <span className="ml-2 text-xs text-gray-500 font-mono">output.json</span>
-              <span className="ml-auto px-2 py-0.5 text-xs rounded bg-yellow-500/20 text-yellow-400">
+              <span className="ml-auto px-2 py-0.5 text-xs text-yellow-400 bg-yellow-500/20 rounded">
                 JSON
               </span>
               <button
                 onClick={handleCopy}
                 disabled={!!error || !output}
-                className="px-3 py-1 text-xs text-gray-400 bg-white/5 rounded-lg transition-colors hover:bg-white/10 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed ml-2"
+                className="px-3 py-1 ml-2 text-xs text-gray-400 bg-white/5 rounded-lg transition-colors hover:bg-white/10 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 {copied ? "Copied!" : "Copy"}
               </button>
             </div>
 
             {error ? (
-              <div className="flex-1 flex flex-col items-start justify-start p-6 bg-gray-900/50 min-h-[420px]">
+              <div className="flex-1 flex flex-col items-start justify-start p-6 min-h-[420px] bg-gray-900/50">
                 <div className="flex items-center gap-2 mb-3">
-                  <span className="w-5 h-5 flex items-center justify-center rounded-full bg-red-500/20 text-red-400 text-xs font-bold">!</span>
+                  <span className="flex items-center justify-center w-5 h-5 text-red-400 text-xs font-bold bg-red-500/20 rounded-full">
+                    !
+                  </span>
                   <span className="text-sm font-semibold text-red-400">Parse Error</span>
                 </div>
-                <pre className="text-xs font-mono text-red-300/80 whitespace-pre-wrap leading-relaxed">{error}</pre>
+                <pre className="text-xs font-mono text-red-300/80 whitespace-pre-wrap leading-relaxed">
+                  {error}
+                </pre>
               </div>
             ) : (
-              <pre className="flex-1 overflow-auto p-5 text-sm font-mono text-gray-300 leading-relaxed bg-gray-900/50 min-h-[420px]">
+              <pre className="overflow-auto flex-1 p-5 min-h-[420px] text-sm font-mono text-gray-300 leading-relaxed bg-gray-900/50">
                 <code>{output}</code>
               </pre>
             )}
 
             {/* Output stats bar */}
-            <div className="flex items-center gap-4 px-4 py-2.5 bg-gray-900/80 border-t border-white/5 text-[11px] font-mono text-gray-500 select-none">
+            <div className="flex items-center gap-4 px-4 py-2.5 text-[11px] font-mono text-gray-500 bg-gray-900/80 border-t border-white/5 select-none">
               <span>{outputStats.chars.toLocaleString()} chars</span>
               <span className="w-px h-3 bg-white/10" />
               <span>{outputStats.lines} lines</span>
@@ -542,23 +562,35 @@ export default function PlaygroundPage() {
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15 }}
-            className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-4"
+            className="grid grid-cols-2 gap-4 mt-6 sm:grid-cols-4"
           >
-            <StatCard label="MSN Characters"  value={inputStats.chars.toLocaleString()}  sub="input" />
-            <StatCard label="JSON Characters"  value={outputStats.chars.toLocaleString()} sub="output" />
+            <StatCard
+              label="MSN Characters"
+              value={inputStats.chars.toLocaleString()}
+              sub="input"
+            />
+            <StatCard
+              label="JSON Characters"
+              value={outputStats.chars.toLocaleString()}
+              sub="output"
+            />
             <StatCard
               label="Char Savings"
-              value={outputStats.chars > inputStats.chars
-                ? `${Math.round((1 - inputStats.chars / outputStats.chars) * 100)}%`
-                : "—"}
+              value={
+                outputStats.chars > inputStats.chars
+                  ? `${Math.round((1 - inputStats.chars / outputStats.chars) * 100)}%`
+                  : "—"
+              }
               sub="MSN vs JSON"
               highlight={outputStats.chars > inputStats.chars}
             />
             <StatCard
               label="Token Savings"
-              value={outputStats.tokens > inputStats.tokens
-                ? `${Math.round((1 - inputStats.tokens / outputStats.tokens) * 100)}%`
-                : "—"}
+              value={
+                outputStats.tokens > inputStats.tokens
+                  ? `${Math.round((1 - inputStats.tokens / outputStats.tokens) * 100)}%`
+                  : "—"
+              }
               sub="approx. estimate"
               highlight={outputStats.tokens > inputStats.tokens}
             />
@@ -570,12 +602,12 @@ export default function PlaygroundPage() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.25 }}
-          className="mt-8 glass-card p-6"
+          className="mt-8 p-6 glass-card"
         >
-          <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">
+          <h2 className="mb-4 text-sm font-semibold text-gray-400 tracking-wider uppercase">
             Quick Reference
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs font-mono">
+          <div className="grid grid-cols-1 gap-4 text-xs font-mono sm:grid-cols-2 lg:grid-cols-3">
             {QUICK_REF.map(({ msn, desc }) => (
               <div key={msn} className="flex items-baseline gap-3">
                 <code className="text-msn-400 shrink-0">{msn}</code>
@@ -601,29 +633,29 @@ function StatCard({
   highlight?: boolean;
 }) {
   return (
-    <div className="p-4 rounded-xl glass-card text-center">
-      <p className="text-[11px] text-gray-500 font-medium uppercase tracking-wider mb-1">{label}</p>
+    <div className="p-4 text-center rounded-xl glass-card">
+      <p className="mb-1 text-[11px] text-gray-500 font-medium tracking-wider uppercase">{label}</p>
       <p className={`text-2xl font-bold font-mono ${highlight ? "text-green-400" : "text-white"}`}>
         {value}
       </p>
-      <p className="text-xs text-gray-500 mt-0.5">{sub}</p>
+      <p className="mt-0.5 text-xs text-gray-500">{sub}</p>
     </div>
   );
 }
 
 const QUICK_REF: { msn: string; desc: string }[] = [
-  { msn: "- key",             desc: "Container (object)" },
-  { msn: "-- key: value",     desc: "Key-value pair" },
-  { msn: "--- key",           desc: "Nested container" },
-  { msn: "-- * item",         desc: "Array element (scalar)" },
-  { msn: "-- *",              desc: "Array element (object)" },
-  { msn: "-- key: |",        desc: "Multiline block (preserves newlines)" },
-  { msn: "-- key: >",        desc: "Multiline folded (joins lines)" },
-  { msn: "# comment",         desc: "Full-line comment" },
+  { msn: "- key", desc: "Container (object)" },
+  { msn: "-- key: value", desc: "Key-value pair" },
+  { msn: "--- key", desc: "Nested container" },
+  { msn: "-- * item", desc: "Array element (scalar)" },
+  { msn: "-- *", desc: "Array element (object)" },
+  { msn: "-- key: |", desc: "Multiline block (preserves newlines)" },
+  { msn: "-- key: >", desc: "Multiline folded (joins lines)" },
+  { msn: "# comment", desc: "Full-line comment" },
   { msn: "-- key: value # c", desc: "Inline comment (space before #)" },
-  { msn: "-- on: true",       desc: "Boolean (true / false)" },
-  { msn: "-- port: 3000",     desc: "Integer" },
-  { msn: "-- pi: 3.14",       desc: "Float" },
-  { msn: "-- x: null",        desc: "Null" },
-  { msn: '-- k: "hello"',     desc: "Quoted string" },
+  { msn: "-- on: true", desc: "Boolean (true / false)" },
+  { msn: "-- port: 3000", desc: "Integer" },
+  { msn: "-- pi: 3.14", desc: "Float" },
+  { msn: "-- x: null", desc: "Null" },
+  { msn: '-- k: "hello"', desc: "Quoted string" },
 ];
