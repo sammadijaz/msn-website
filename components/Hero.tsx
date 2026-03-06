@@ -64,7 +64,7 @@ export function Hero() {
           className="mt-12 text-sm text-gray-600"
         >
           <code className="px-4 py-2 bg-gray-900 rounded-lg border-gray-800 border">
-            npm install @msn/parser
+            npm install @madsn/parser
           </code>
         </motion.div>
       </div>

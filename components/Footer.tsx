@@ -29,10 +29,10 @@ export function Footer() {
             <h3 className="mb-4 text-sm font-semibold text-white">Ecosystem</h3>
             <ul className="space-y-2">
               <li>
-                <span className="text-sm text-gray-500">@msn/parser</span>
+                <span className="text-sm text-gray-500">@madsn/parser</span>
               </li>
               <li>
-                <span className="text-sm text-gray-500">@msn/cli</span>
+                <span className="text-sm text-gray-500">@madsn/cli</span>
               </li>
               <li>
                 <span className="text-sm text-gray-500">VS Code Extension</span>

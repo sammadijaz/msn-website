@@ -10,13 +10,13 @@ const sections = [
     content: `Install the MSN CLI globally:
 
 \`\`\`bash
-npm install -g @msn/cli
+npm install -g @madsn/cli
 \`\`\`
 
 Or add the parser to your project:
 
 \`\`\`bash
-npm install @msn/parser
+npm install @madsn/parser
 \`\`\`
 
 Compile an MSN file to JSON:
@@ -199,7 +199,7 @@ Wrap a numeric value in quotes to force it to be a string: \`"3000"\`.`,
     content: `**Quick start:**
 
 \`\`\`typescript
-import { compile, compileToString } from '@msn/parser';
+import { compile, compileToString } from '@madsn/parser';
 
 // Get a JavaScript object
 const obj = compile(\`
@@ -223,14 +223,14 @@ const json = compileToString(\`
 **Validator:**
 
 \`\`\`typescript
-import { validate } from '@msn/validator';
+import { validate } from '@madsn/validator';
 const errors = validate(source);
 \`\`\`
 
 **Formatter:**
 
 \`\`\`typescript
-import { format } from '@msn/formatter';
+import { format } from '@madsn/formatter';
 const formatted = format(source);
 \`\`\``,
   },

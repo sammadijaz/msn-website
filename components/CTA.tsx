@@ -51,7 +51,7 @@ export function CTA() {
           >
             <p className="mb-3 text-gray-500 text-sm">Install in seconds</p>
             <code className="inline-block px-6 py-3 text-msn-400 font-mono text-sm bg-white/5 rounded-lg border-white/10 border">
-              npm install -g @msn/cli
+              npm install -g @madsn/cli
             </code>
           </motion.div>
         </motion.div>
