@@ -32,8 +32,8 @@ export function Hero() {
           </p>
 
           <p className="mx-auto mb-12 max-w-2xl text-base text-gray-500">
-            MSN is a hierarchical data language that compiles directly to JSON.
-            Up to 60% fewer tokens than JSON — designed for LLM workflows.
+            MSN is a hierarchical data language that compiles directly to JSON. Up to 60% fewer
+            tokens than JSON — designed for LLM workflows.
           </p>
         </motion.div>
 
@@ -64,7 +64,7 @@ export function Hero() {
           className="mt-12 text-sm text-gray-600"
         >
           <code className="px-4 py-2 bg-gray-900 rounded-lg border-gray-800 border">
-            npm install @madsn/parser
+            npm install -g @madsn/cli
           </code>
         </motion.div>
       </div>

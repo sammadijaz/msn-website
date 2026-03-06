@@ -24,10 +24,7 @@ const formats: FormatInfo[] = [
       "Simple enough to parse with a few regex rules",
       "Comments supported",
     ],
-    cons: [
-      "New format — not yet widely adopted",
-      "Tooling ecosystem still growing",
-    ],
+    cons: ["New format — not yet widely adopted", "Tooling ecosystem still growing"],
     example: `- server
 -- host: localhost
 -- port: 3000
@@ -125,6 +122,29 @@ features = ["auth", "logging"]`,
   </features>
 </server>`,
   },
+  {
+    name: "TON",
+    tagColor: "text-cyan-400",
+    tagBg: "bg-cyan-500/20",
+    pros: [
+      "Compact object syntax with curly braces",
+      "No quoting for simple string values",
+      "Clean key = value pairs",
+      "Supports nested blocks naturally",
+    ],
+    cons: [
+      "Requires curly braces for nesting",
+      "Less widely adopted than TOML/YAML",
+      "Limited tooling ecosystem",
+      "Array syntax still uses brackets",
+      "Not as token-efficient as MSN",
+    ],
+    example: `server {
+  host = localhost
+  port = 3000
+  features = [auth, logging]
+}`,
+  },
 ];
 
 export default function ComparisonPage() {
@@ -152,9 +172,7 @@ export default function ComparisonPage() {
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-white/10">
-                <th className="py-3 px-4 text-left text-gray-400 font-medium">
-                  Feature
-                </th>
+                <th className="py-3 px-4 text-left text-gray-400 font-medium">Feature</th>
                 {formats.map((f) => (
                   <th key={f.name} className="py-3 px-4 text-center">
                     <span
@@ -168,30 +186,34 @@ export default function ComparisonPage() {
             </thead>
             <tbody className="text-gray-300">
               {[
-                { label: "Comments", vals: ["yes", "no", "yes", "yes", "yes"] },
+                { label: "Comments", vals: ["yes", "no", "yes", "yes", "yes", "yes"] },
                 {
                   label: "Unlimited Nesting",
-                  vals: ["yes", "yes", "yes", "hard", "yes"],
+                  vals: ["yes", "yes", "yes", "hard", "yes", "yes"],
                 },
                 {
                   label: "Token Efficient",
-                  vals: ["best", "poor", "good", "fair", "worst"],
+                  vals: ["best", "poor", "good", "fair", "worst", "good"],
                 },
                 {
                   label: "Compiles to JSON",
-                  vals: ["yes", "native", "lib", "lib", "lib"],
+                  vals: ["yes", "native", "lib", "lib", "lib", "lib"],
                 },
                 {
                   label: "Type Inference",
-                  vals: ["yes", "no", "yes", "yes", "no"],
+                  vals: ["yes", "no", "yes", "yes", "no", "yes"],
                 },
                 {
                   label: "Easy to Learn",
-                  vals: ["yes", "yes", "no", "fair", "no"],
+                  vals: ["yes", "yes", "no", "fair", "no", "fair"],
                 },
                 {
                   label: "Simple Spec",
-                  vals: ["yes", "yes", "no", "fair", "no"],
+                  vals: ["yes", "yes", "no", "fair", "no", "fair"],
+                },
+                {
+                  label: "No Brackets/Braces",
+                  vals: ["yes", "no", "yes", "no", "no", "no"],
                 },
               ].map((row) => (
                 <tr key={row.label} className="border-b border-white/5">
@@ -243,10 +265,7 @@ export default function ComparisonPage() {
                   </h3>
                   <ul className="space-y-2">
                     {fmt.pros.map((p) => (
-                      <li
-                        key={p}
-                        className="flex items-start gap-2 text-sm text-gray-300"
-                      >
+                      <li key={p} className="flex items-start gap-2 text-sm text-gray-300">
                         <span className="mt-0.5 text-green-400">+</span>
                         {p}
                       </li>
@@ -259,10 +278,7 @@ export default function ComparisonPage() {
                   </h3>
                   <ul className="space-y-2">
                     {fmt.cons.map((c) => (
-                      <li
-                        key={c}
-                        className="flex items-start gap-2 text-sm text-gray-300"
-                      >
+                      <li key={c} className="flex items-start gap-2 text-sm text-gray-300">
                         <span className="mt-0.5 text-red-400">-</span>
                         {c}
                       </li>

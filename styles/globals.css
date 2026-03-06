@@ -3,12 +3,38 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(99, 102, 241, 0.3) transparent;
+  }
+
   body {
     @apply bg-gray-950 text-gray-100 antialiased;
   }
 
   ::selection {
-    @apply bg-msn-500/30;
+    @apply bg-msn-500/30 text-white;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(99, 102, 241, 0.25);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(99, 102, 241, 0.45);
+  }
+
+  /* Focus ring */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-msn-500/50 ring-offset-2 ring-offset-gray-950;
   }
 }
 
@@ -17,15 +43,81 @@
     @apply bg-clip-text text-transparent bg-gradient-to-r from-msn-400 via-purple-400 to-pink-400;
   }
 
+  .gradient-text-subtle {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-msn-300 to-msn-500;
+  }
+
   .glass-card {
     @apply bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl;
+    transition:
+      border-color 0.3s ease,
+      box-shadow 0.3s ease,
+      transform 0.3s ease;
+  }
+
+  .glass-card:hover {
+    @apply border-white/20;
+    box-shadow: 0 0 40px -10px rgba(99, 102, 241, 0.12);
+  }
+
+  .glass-card-interactive {
+    @apply glass-card cursor-pointer;
+  }
+
+  .glass-card-interactive:hover {
+    @apply border-msn-500/30;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 40px -12px rgba(99, 102, 241, 0.2);
   }
 
   .glow {
     box-shadow: 0 0 60px -12px rgba(99, 102, 241, 0.25);
   }
 
+  .glow-lg {
+    box-shadow: 0 0 100px -20px rgba(99, 102, 241, 0.3);
+  }
+
   .code-block {
     @apply bg-gray-900/80 border border-gray-800 rounded-xl p-6 font-mono text-sm overflow-x-auto;
+  }
+
+  /* Section divider */
+  .section-divider {
+    @apply border-t border-white/5;
+  }
+
+  /* Badge styles */
+  .badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border;
+  }
+  .badge-msn {
+    @apply badge bg-msn-500/10 text-msn-400 border-msn-500/20;
+  }
+  .badge-green {
+    @apply badge bg-green-500/10 text-green-400 border-green-500/20;
+  }
+
+  /* Dot grid background pattern */
+  .bg-dot-pattern {
+    background-image: radial-gradient(rgba(99, 102, 241, 0.08) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+}
+
+@layer utilities {
+  /* Fade-in from below */
+  .fade-in-up {
+    animation: fadeInUp 0.6s ease-out both;
+  }
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 }

@@ -58,17 +58,18 @@ const formats: FormatData[] = [
     arrays: 187,
     complex: 756,
   },
+  {
+    name: "TON",
+    color: "text-cyan-400",
+    bgColor: "bg-cyan-500/20",
+    simple: 50,
+    nested: 118,
+    arrays: 74,
+    complex: 305,
+  },
 ];
 
-function Bar({
-  value,
-  max,
-  color,
-}: {
-  value: number;
-  max: number;
-  color: string;
-}) {
+function Bar({ value, max, color }: { value: number; max: number; color: string }) {
   const pct = (value / max) * 100;
   return (
     <div className="flex items-center gap-3">
@@ -81,9 +82,7 @@ function Bar({
           transition={{ duration: 0.8, ease: "easeOut" }}
         />
       </div>
-      <span className="w-12 text-sm text-gray-400 text-right font-mono">
-        {value}
-      </span>
+      <span className="w-12 text-sm text-gray-400 text-right font-mono">{value}</span>
     </div>
   );
 }
@@ -112,9 +111,8 @@ export function TokenComparison() {
             Token <span className="gradient-text">Efficiency</span>
           </h2>
           <p className="mx-auto max-w-2xl text-gray-400 text-lg">
-            MSN consistently uses fewer characters than other formats. Fewer
-            tokens means faster parsing, less bandwidth, and smaller prompts for
-            AI&nbsp;models.
+            MSN consistently uses fewer characters than other formats. Fewer tokens means faster
+            parsing, less bandwidth, and smaller prompts for AI&nbsp;models.
           </p>
         </motion.div>
 
@@ -170,8 +168,7 @@ export function TokenComparison() {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="mt-10 text-center text-gray-500 text-sm"
         >
-          Character counts measured on equivalent configurations. Lower is
-          better.
+          Character counts measured on equivalent configurations. Lower is better.
         </motion.p>
       </div>
     </section>
