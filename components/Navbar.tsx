@@ -34,7 +34,7 @@ export function Navbar() {
               </Link>
             ))}
             <a
-              href="https://github.com/madsam/msn"
+              href="https://github.com/sammadijaz/msn"
               target="_blank"
               rel="noopener noreferrer"
               className="ml-4 px-4 py-2 text-sm text-white bg-msn-600 rounded-lg transition-colors hover:bg-msn-500"

@@ -26,6 +26,10 @@ export const metadata: Metadata = {
       "The most token-efficient structured data format for AI and modern applications.",
     type: "website",
   },
+  icons: {
+    icon: "/favicon.png",
+    shortcut: "/favicon.png",
+  },
 };
 
 export default function RootLayout({

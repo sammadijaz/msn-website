@@ -52,7 +52,7 @@ const steps = [
   {
     num: "1",
     title: "Fork the Repository",
-    desc: "Fork github.com/madsam/msn and clone it locally.",
+    desc: "Fork https://github.com/sammadijaz/msn and clone it locally.",
   },
   {
     num: "2",
